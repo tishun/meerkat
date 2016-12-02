@@ -15,11 +15,11 @@ CAM_RES_WIDTH = 640
 CAM_RES_HEIGHT = 480
 CAM_WARMUP = 5
 
-DILATE_ITERATIONS = 2          # 2-50 Large values help to connect blobs. Use large for low light
-GAUSIAN_BLUR = 21              # Blurs contours
-DIFF_THRESHOLD = 30            # Diff between objects and first frame. Lower values for low light
-DIFF_ALGO = cv2.THRESH_BINARY  # cv2.cv2.THRESH_BINARY or cv2.THRESH_OTSU
-BLOB_AREA_THRESHHOLD = 500     # The minimal area of blobs detected in pixels
+DILATE_ITERATIONS = 5                           # 2-50 Large values help to connect blobs. Use large for low light
+GAUSIAN_BLUR = 21                               # Blurs contours
+DIFF_THRESHOLD = 20                             # Diff between objects and first frame. Lower values for low light
+DIFF_ALGO = cv2.THRESH_BINARY+cv2.THRESH_OTSU   # cv2.THRESH_BINARY or cv2.THRESH_OTSU
+BLOB_AREA_THRESHHOLD = 500                      # The minimal area of blobs detected in pixels
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -56,7 +56,7 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
         # compute the absolute difference between the current frame and
         # first frame
         frameDelta = cv2.absdiff(firstFrame, gray)
-        thresh = cv2.threshold(frameDelta, DIFF_THRESHOLD, 255, DIFF_ALGO)[1]
+        adaptivedDiffThreshold, thresh = cv2.threshold(frameDelta, DIFF_THRESHOLD, 255, DIFF_ALGO)
  
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
@@ -67,8 +67,8 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
         # loop over the contours
         for c in cnts:
                 
-                # if the contour is too small, ignore it
-                if cv2.contourArea(c) < BLOB_AREA_THRESHHOLD:
+                # if the adaptive threshold is too small or the contour is too small, ignore it
+                if adaptivedDiffThreshold < DIFF_THRESHOLD or cv2.contourArea(c) < BLOB_AREA_THRESHHOLD:
                         continue
  
                 # compute the bounding box for the contour, draw it on the frame,
