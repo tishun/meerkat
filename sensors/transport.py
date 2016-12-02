@@ -11,6 +11,7 @@ DEVICE_ID = 'fitness'           # Unique identifier of this device
 class Transport:
 
      def send(self, sensor_type, sensor_reading):
+        print('Sending')
         url = 'http://10.23.8.174:8080/stats'
         values = {'DEVICE_ID' : DEVICE_ID,
                   'SENSOR_TYPE' : sensor_type,
