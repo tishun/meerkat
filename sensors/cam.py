@@ -1,23 +1,34 @@
-# USAGE
-# python motion_detector.py
-# python motion_detector.py --video videos/example_01.mp4
- 
-# import the necessary packages
+'''
+<<<<<<< HEAD
+Reads camera sensor readings and sends them to a remote location to be stored
+'''
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import argparse
 import datetime
 import time
 import cv2
- 
+
+# initialize constants - play with those to achive best results
+CAM_FRAMERATE = 24
+CAM_RES_WIDTH = 640
+CAM_RES_HEIGHT = 480
+CAM_WARMUP = 5
+
+DILATE_ITERATIONS = 2 # 2-50 Large values help to connect blobs. Use large for low light
+GAUSIAN_BLUR = 21 # Blurs contours
+DIFF_THRESHOLD = 30 # Diff between objects and first frame. Lower values for low light
+DIFF_ALGO = cv2.THRESH_BINARY # cv2.cv2.THRESH_BINARY or cv2.THRESH_OTSU
+BLOB_AREA_THRESHHOLD = 500 # The minimal area of blobs detected in pixels
+
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 5
-rawCapture = PiRGBArray(camera, size=(640, 480))
+camera.resolution = (CAM_RES_WIDTH, CAM_RES_HEIGHT)
+camera.framerate = CAM_FRAMERATE
+rawCapture = PiRGBArray(camera, size=(CAM_RES_WIDTH, CAM_RES_HEIGHT))
 
 # allow the camera to warmup
-time.sleep(5)
+time.sleep(CAM_WARMUP)
  
 # initialize the first frame in the video stream
 firstFrame = None
@@ -32,7 +43,7 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
         frame = myFrame.array
         # resize the frame, convert it to grayscale, and blur it
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (21, 21), 0)
+        gray = cv2.GaussianBlur(gray, (GAUSIAN_BLUR, GAUSIAN_BLUR), 0)
         
         # if the first frame is None, initialize it
         if firstFrame is None:
@@ -45,11 +56,11 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
         # compute the absolute difference between the current frame and
         # first frame
         frameDelta = cv2.absdiff(firstFrame, gray)
-        thresh = cv2.threshold(frameDelta, 100, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(frameDelta, 100, 255, DIFF_ALGO)[1]
  
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
-        thresh = cv2.dilate(thresh, None, iterations=2)
+        thresh = cv2.dilate(thresh, None, iterations=DILATE_ITERATIONS)
         (img, cnts, hierarchy) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
                 cv2.CHAIN_APPROX_SIMPLE)
 
@@ -57,7 +68,7 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
         for c in cnts:
                 
                 # if the contour is too small, ignore it
-                if cv2.contourArea(c) < 500:
+                if cv2.contourArea(c) < BLOB_AREA_THRESHHOLD:
                         continue
  
                 # compute the bounding box for the contour, draw it on the frame,
