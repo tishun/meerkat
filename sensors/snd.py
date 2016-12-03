@@ -18,14 +18,14 @@ currentPositive = 0
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(5, GPIO.IN)          # Take input from sound detector
+GPIO.setup(7, GPIO.IN)          # Take input from sound detector
 GPIO.setup(3, GPIO.OUT)         # Output readings to this pin (LED)
 
 transport = Transport()
 
 while True:
        currentCount += 1
-       i=GPIO.input(5)
+       i=GPIO.input(7)
        if i==0:                 # When output from motion sensor is LOW
              GPIO.output(3, 0)  # Turn OFF LED
        elif i==1:               # When output from motion sensor is HIGH
