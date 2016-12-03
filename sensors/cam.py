@@ -13,7 +13,7 @@ import cv2
 # GPIO for physical debugging
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(5, GPIO.OUT)                         # GREEN led indicating nothing detected
+GPIO.setup(13, GPIO.OUT)                        # GREEN led indicating nothing detected
 GPIO.setup(11, GPIO.OUT)                        # RED led indicating objects detected
 
 
@@ -77,7 +77,6 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 
                 # if the adaptive threshold is too small or the contour is too small, ignore it
                 if adaptivedDiffThreshold < DIFF_THRESHOLD or cv2.contourArea(c) < BLOB_AREA_THRESHHOLD:
-                        GPIO.output(5, 1)
                         GPIO.output(11, 0)
                         continue
  
@@ -86,7 +85,6 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 (x, y, w, h) = cv2.boundingRect(c)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 text = "Occupied"
-                GPIO.output(5, 0)
                 GPIO.output(11, 1)
  
         # draw the text and timestamp on the frame
