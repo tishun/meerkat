@@ -40,18 +40,21 @@ body{
     outline: none;
     border-color: red;
     box-shadow: 0 0 50px red;
+	border-radius: 50px;
 }
 
 .available {
 	outline: none;
     border-color: lime;
     box-shadow: 0 0 50px lime;
+	border-radius: 50px;
 }
 
 .unknown {
 	outline: none;
     border-color: yellow;
     box-shadow: 0 0 50px yellow;
+	border-radius: 50px;
 }
 
 .meter { 
