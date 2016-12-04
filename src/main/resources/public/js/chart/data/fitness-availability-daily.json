@@ -1,0 +1,32 @@
+{
+  "type": "line",
+  "data": {
+    "labels": ["9:00", "12:00", "15:00", "18:00", "21:00"],
+    "datasets": [
+      {
+        "backgroundColor": "white",
+        "borderColor": "white",
+
+        "data": [3, 2, 5, 7, 3],
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "title": {
+      "display": true,
+      "position": "bottom",
+      "text": "Monday Fitness crowd"
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "display": true,
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      ]
+    }
+  }
+}

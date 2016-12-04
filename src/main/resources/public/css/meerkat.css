@@ -22,8 +22,7 @@ body{
 
 #rooms img {
 	width: 350px;
-    weight: 350px;
-	margin: 50px;
+	margin: 25px;
 }
 
 #rooms{
@@ -123,4 +122,8 @@ body{
 .red > span {
   background-color: #f0a3a3;
   background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
+}
+.chart {
+    width: 80%;
+    margin: 20px auto;
 }

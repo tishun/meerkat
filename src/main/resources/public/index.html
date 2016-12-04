@@ -3,6 +3,7 @@
     <head>
         <title>Meerkat</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
         <script src="js/meerkat.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/meerkat.css">
     </head>
@@ -19,6 +20,30 @@
 			<tr>
 			    <td><div class="meter"><span style="width: 5%"></span></div></td>
 			    <td><div class="meter red"><span style="width: 75%"></span></div></td>
+			</tr>
+			<tr>
+				<td>
+					<div class="chart">
+						<canvas id="fitness-availability-daily"></canvas>
+					</div>
+				</td>
+				<td>
+					<div class="chart">
+						<canvas id="tennis-availability-daily"></canvas>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="chart">
+						<canvas id="fitness-availability-weekly"></canvas>
+					</div>
+				</td>
+				<td>
+					<div class="chart">
+						<canvas id="tennis-availability-weekly"></canvas>
+					</div>
+				</td>
 			</tr>
 		</table>
     </body>

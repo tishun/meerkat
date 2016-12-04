@@ -1,0 +1,33 @@
+{
+  "type": "line",
+  "data": {
+    "labels": ["9:00", "12:00", "15:00", "18:00", "21:00"],
+    "datasets": [
+      {
+        "label": "My First dataset",
+        "backgroundColor": "white",
+        "borderColor": "white",
+
+        "data": [2, 2, 4, 6, 2],
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "title": {
+      "display": true,
+      "position": "bottom",
+      "text": "Monday Tennis Crowd"
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "display": true,
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      ]
+    }
+  }
+}
