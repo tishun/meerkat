@@ -1,17 +1,18 @@
 $(document).ready(function() {
-    $.ajax({
-        url: "http://meerkat.eng.vmware.com:80/availability/fitness"
-    }).then(function(data) {
-		var className = 'unknown';
-		
-    	if(data === true){
-			className = "available";
-		} else if (data === false){
-			className = "unavailable";
-		}
-		
-		$("#fitness-img").attr('class', className);;
-    });
+	 setInterval(function(){ $.ajax({
+		 url: "http://meerkat.eng.vmware.com:80/availability/fitness"
+	 }).then(function(data) {
+		 var className = 'unknown';
+
+		 if(data === true){
+			 className = "available";
+		 } else if (data === false){
+			 className = "unavailable";
+		 }
+
+		 $("#fitness-img").attr('class', className);
+	 }); }, 3000);
+
 	
 	$.ajax({
         url: "http://meerkat.eng.vmware.com:80/availability/tennis"
