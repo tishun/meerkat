@@ -3,14 +3,14 @@ body{
     background-position: top right;
     background-repeat: no-repeat;
     background-size: 350px;
-	background-color: #0D6A8E;
+	background-color: #256a8e;
 }
 
 /* #9CD8F2 */
 
 /* #29A4DF */
 
-/* #0D6A8E */
+/* #256a8e */
 
 .header {
 	color: white;
@@ -22,7 +22,6 @@ body{
 
 #rooms img {
 	width: 350px;
-    weight: 350px;
 	margin: 50px;
 }
 
@@ -40,18 +39,21 @@ body{
     outline: none;
     border-color: red;
     box-shadow: 0 0 50px red;
+	border-radius: 50px;
 }
 
 .available {
 	outline: none;
     border-color: lime;
     box-shadow: 0 0 50px lime;
+	border-radius: 50px;
 }
 
 .unknown {
 	outline: none;
     border-color: yellow;
     box-shadow: 0 0 50px yellow;
+	border-radius: 50px;
 }
 
 .meter { 
@@ -120,4 +122,8 @@ body{
 .red > span {
   background-color: #f0a3a3;
   background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
+}
+.chart {
+    width: 80%;
+    margin: 20px auto;
 }

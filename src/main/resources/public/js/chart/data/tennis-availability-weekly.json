@@ -1,0 +1,32 @@
+{
+  "type": "bar",
+  "data": {
+    "labels": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "datasets": [
+      {
+        "backgroundColor": "white",
+        "borderColor": "white",
+
+        "data": [20, 16, 22, 14, 28],
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "title": {
+      "display": true,
+      "position": "bottom",
+      "text": "Weekly tennis crowd"
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "display": true,
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      ]
+    }
+  }
+}
