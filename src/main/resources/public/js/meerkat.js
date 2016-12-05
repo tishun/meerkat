@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $.ajax({
-        url: "http://10.23.8.174:8080/availability/fitness"
+        url: "http://meerkat.eng.vmware.com:80/availability/fitness"
     }).then(function(data) {
 		var className = 'unknown';
 		
@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 	
 	$.ajax({
-        url: "http://10.23.8.174:8080/availability/tennis"
+        url: "http://meerkat.eng.vmware.com:80/availability/tennis"
     }).then(function(data) {
 		var className = 'unknown';
 		
