@@ -65,7 +65,7 @@ public class StatsController {
 
       List<SensorEvent> lastEvent =
             _repository.findFirst1BySensorTypeAndDeviceIdOrderByTimestampDesc(
-                  "SND", room);
+                  "CAM", room);
       // It is safer to declare a room available than not.
       boolean status = true;
       if (!lastEvent.isEmpty() && lastEvent.size() == 1) {
