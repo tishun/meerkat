@@ -12,11 +12,12 @@ class Transport:
 
      def send(self, sensor_type, sensor_reading):
         print('Sending')
-        url = 'http://10.23.8.174:8080/stats'
+        url = 'http://meerkat.eng.vmware.com/stats'
         values = {'DEVICE_ID' : DEVICE_ID,
                   'SENSOR_TYPE' : sensor_type,
                   'SENSOR_READING' : sensor_reading,
-                  'TIMESTAMP' : str(round(time.time() * 1000)) }
+                  'TIMESTAMP' : str(round(time.time() * 1000)),
+                  'TOKEN' : 'secret'}
 
         data = urllib.parse.urlencode(values)
         data = data.encode('ascii') # data should be bytes

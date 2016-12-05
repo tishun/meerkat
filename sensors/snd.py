@@ -27,8 +27,10 @@ while True:
        currentCount += 1
        i=GPIO.input(7)
        if i==0:                 # When output from motion sensor is LOW
+             print('1')
              GPIO.output(3, 0)  # Turn OFF LED
        elif i==1:               # When output from motion sensor is HIGH
+             print('1')
              GPIO.output(3, 1)  # Turn ON LED
              currentPositive += 1
 

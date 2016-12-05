@@ -4,11 +4,16 @@ Reads camera sensor readings and sends them to a remote location to be stored
 '''
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from .transport import Transport
 import RPi.GPIO as GPIO
 import argparse
 import datetime
 import time
 import cv2
+
+DEBUG_MODE = false                              # Enables camera renderting for debug purposes
+
+SENSOR_TYPE = 'CAM'                             # Camera sensor
 
 # GPIO for physical debugging
 GPIO.setwarnings(False)
@@ -40,7 +45,8 @@ time.sleep(CAM_WARMUP)
  
 # initialize the first frame in the video stream
 firstFrame = None
-secondFrame = None
+lastReading = None
+transport = Transport()
 
 # capture frames from the camera
 for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -58,8 +64,6 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 firstFrame = gray
                 rawCapture.truncate(0)
                 continue
-        elif secondFrame is None:
-                secondFrame = gray
 
         # compute the absolute difference between the current frame and
         # first frame
@@ -77,7 +81,7 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 
                 # if the adaptive threshold is too small or the contour is too small, ignore it
                 if adaptivedDiffThreshold < DIFF_THRESHOLD or cv2.contourArea(c) < BLOB_AREA_THRESHHOLD:
-                        GPIO.output(11, 0)
+                        text = "Unoccupied"
                         continue
  
                 # compute the bounding box for the contour, draw it on the frame,
@@ -85,7 +89,17 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 (x, y, w, h) = cv2.boundingRect(c)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 text = "Occupied"
-                GPIO.output(11, 1)
+                
+        # Change LED state and send data when room has changed state from
+        # occupied to unoccupied and vice versa
+        if(text!=lastReading):
+             lastReading = text
+             if(text == "Unoccupied"):
+                  GPIO.output(11, 0)
+                  transport.send(SENSOR_TYPE, 0)
+             else:
+                  GPIO.output(11, 1)
+                  transport.send(SENSOR_TYPE, 1)
  
         # draw the text and timestamp on the frame
         cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
@@ -94,12 +108,11 @@ for myFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_por
                 (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
  
         # show the frame and record if the user presses a key
-        cv2.imshow("Video Feed", frame)
-        cv2.imshow("Thresh", thresh)
-        cv2.imshow("Frame Delta", frameDelta)
-        #cv2.imshow("First Frame", firstFrame)
-        #cv2.imshow("Second Frame", secondFrame)
-        #print(hierarchy.size())
+        if(DEBUG_MODE):
+             cv2.imshow("Video Feed", frame)
+             cv2.imshow("Thresh", thresh)
+             cv2.imshow("Frame Delta", frameDelta)
+
         key = cv2.waitKey(1) & 0xFF
  
         # if the `q` key was pressed, break from the loop
