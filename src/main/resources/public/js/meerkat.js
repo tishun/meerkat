@@ -4,9 +4,9 @@ $(document).ready(function() {
     }).then(function(data) {
 		var className = 'unknown';
 		
-    	if(data == 'true'){
+    	if(data === true){
 			className = "available";
-		} else if (data === 'false'){
+		} else if (data === false){
 			className = "unavailable";
 		}
 		
@@ -18,9 +18,9 @@ $(document).ready(function() {
     }).then(function(data) {
 		var className = 'unknown';
 		
-    	if(data == 'true'){
+    	if(data === true){
 			className = "available";
-		} else if (data === 'false'){
+		} else if (data === false){
 			className = "unavailable";
 		}
 		
