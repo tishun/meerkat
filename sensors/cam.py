@@ -11,7 +11,7 @@ import datetime
 import time
 import cv2
 
-DEBUG_MODE = false                              # Enables camera renderting for debug purposes
+DEBUG_MODE = False                              # Enables camera renderting for debug purposes
 
 SENSOR_TYPE = 'CAM'                             # Camera sensor
 
